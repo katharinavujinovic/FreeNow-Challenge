@@ -17,6 +17,16 @@ struct VehicleMapAnnotationView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25)
+                .padding(10)
+                .background(Color.yellow)
+                .clipShape(Circle())
+            Image(systemName: "triangle.fill")
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.yellow)
+                .frame(width: 10, height: 10)
+                .rotationEffect(Angle(degrees: 180))
+                .offset(y: -2)
         }
     }
 }

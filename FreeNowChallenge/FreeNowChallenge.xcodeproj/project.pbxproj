@@ -27,6 +27,8 @@
 		43AF4A59293D27D0003470E8 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 43AF4A58293D27D0003470E8 /* ReactiveSwift */; };
 		43AF4A5C293D280E003470E8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 43AF4A5B293D280E003470E8 /* Alamofire */; };
 		43AF4A5F293D28A4003470E8 /* Fetch in Frameworks */ = {isa = PBXBuildFile; productRef = 43AF4A5E293D28A4003470E8 /* Fetch */; };
+		43E7FDAF29436F6700A3C609 /* CenterMapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E7FDAE29436F6700A3C609 /* CenterMapPin.swift */; };
+		43E7FDB1294370D400A3C609 /* NearestVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E7FDB0294370D400A3C609 /* NearestVehicleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		43AF4A44293D2713003470E8 /* FreeNowChallengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FreeNowChallengeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43AF4A48293D2713003470E8 /* FreeNowChallengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeNowChallengeUITests.swift; sourceTree = "<group>"; };
 		43AF4A4A293D2713003470E8 /* FreeNowChallengeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeNowChallengeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		43E7FDAE29436F6700A3C609 /* CenterMapPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterMapPin.swift; sourceTree = "<group>"; };
+		43E7FDB0294370D400A3C609 /* NearestVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestVehicleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +112,10 @@
 			isa = PBXGroup;
 			children = (
 				43221226293D377B003CB498 /* NearbyView.swift */,
+				43E7FDB0294370D400A3C609 /* NearestVehicleView.swift */,
 				4352D3D3293D40C9004AB457 /* VehicleListView.swift */,
 				4352D3D929413C00004AB457 /* VehicleMapAnnotationView.swift */,
+				43E7FDAE29436F6700A3C609 /* CenterMapPin.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,10 +350,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4352D3EC29429153004AB457 /* VehiclePOI.swift in Sources */,
+				43E7FDAF29436F6700A3C609 /* CenterMapPin.swift in Sources */,
 				43221227293D377B003CB498 /* NearbyView.swift in Sources */,
 				4352D3DA29413C00004AB457 /* VehicleMapAnnotationView.swift in Sources */,
 				4352D3DE2942311F004AB457 /* AppDelegate.swift in Sources */,
 				4352D3D8293D43C1004AB457 /* VehicleResponse.swift in Sources */,
+				43E7FDB1294370D400A3C609 /* NearestVehicleView.swift in Sources */,
 				4352D3EA29428234004AB457 /* MKCoordinateRegion+Extension.swift in Sources */,
 				4352D3E129423A6F004AB457 /* FreeNowChallengeApp.swift in Sources */,
 				4352D3D2293D3A1A004AB457 /* NearbyViewModel.swift in Sources */,
