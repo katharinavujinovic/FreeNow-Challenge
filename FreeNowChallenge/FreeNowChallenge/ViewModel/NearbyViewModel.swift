@@ -16,6 +16,7 @@ final class NearbyViewModel: ObservableObject {
     @Published var vehicles: [VehiclePOI]? = nil
     @Published var mapRegion = Configuration.DefaultLocation.region
     @Published var error: NearbyError? = nil
+    @Published var selectedPOI: VehiclePOI? = nil
     
     var cancellable: Cancellable?
     
@@ -26,7 +27,8 @@ final class NearbyViewModel: ObservableObject {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished:
-                    print("finished")
+                    // maybe a loading screen?
+                    return
                 case .failure:
                     self?.error = NearbyError.networkingError
                 }
@@ -39,6 +41,7 @@ final class NearbyViewModel: ObservableObject {
                     }
                     let sortedByDistance = allVehicles.sorted { $0.distanceToUser ?? 0 < $1.distanceToUser ?? 0 }
                     self?.vehicles = sortedByDistance
+                    self?.selectedPOI = sortedByDistance.first
                 } else {
                     self?.error = NearbyError.noVehiclesNearby
                 }

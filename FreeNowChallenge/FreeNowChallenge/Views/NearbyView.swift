@@ -17,24 +17,63 @@ struct NearbyView: View {
     @State
     private var region = Configuration.DefaultLocation.region
     
+    @State private var showingVehicleList = false
+    
     var body: some View {
         ZStack {
-            Map(coordinateRegion: $region, annotationItems: viewModel.vehicles ?? [], annotationContent: { vehicle in
-                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: vehicle.vehicle.coordinate.latitude, longitude: vehicle.vehicle.coordinate.longitude)) {
+            Map(coordinateRegion: $region,
+                annotationItems: viewModel.vehicles ?? [],
+                annotationContent: { vehicle in
+                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: vehicle.vehicle.coordinate.latitude,
+                                                                 longitude: vehicle.vehicle.coordinate.longitude)) {
                     VehicleMapAnnotationView(vehicle: vehicle)
+                        .scaleEffect(viewModel.selectedPOI?.id == vehicle.id ? 1 : 0.7)
+                        .shadow(radius: 5)
+                        .onTapGesture {
+                            viewModel.selectedPOI = vehicle
+                        }
                 }
             }).onChange(of: region, perform: { newRegion in
-                self.viewModel.getNearbyVehicles(center: newRegion.center, span: newRegion.span)
-            })
-                .ignoresSafeArea()
+                self.viewModel.getNearbyVehicles(center: newRegion.center,
+                                                 span: newRegion.span)
+            }).ignoresSafeArea()
+            CenterMapPin()
             VStack {
                 Spacer()
-                ZStack {
-                    VehicleListView(viewModel: viewModel)
-                        .frame(maxHeight: UIScreen.main.bounds.height / 3)
-                        .cornerRadius(20)
-                        .shadow(radius: 10)
-                        .padding()
+                
+                if let vehicles = viewModel.vehicles {
+                    ZStack {
+                        ForEach(vehicles) { location in
+                            if viewModel.selectedPOI?.id == location.id {
+                                NearestVehicleView(vehiclePOI: location,
+                                                   isClosestVehicle: location.id == viewModel.vehicles?.first?.id)
+                            }
+                        }
+                    }
+                    .shadow(radius: 10)
+                    .padding(20)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .trailing),
+                        removal: .move(edge: .leading)))
+                }
+                
+                Button {
+                    showingVehicleList.toggle()
+                } label: {
+                    Label {
+                        Text("All Vehicles Nearby")
+                            .font(.body)
+                    } icon: {
+                        Image(systemName: "heart")
+                    }
+                    .foregroundColor(Color.white)
+                    .frame(width: .infinity, height: .infinity)
+                    .padding(6)
+                    .background(Color.gray)
+                    .cornerRadius(10)
+                }
+                .sheet(isPresented: $showingVehicleList) {
+                    VehicleListView(vehicles: viewModel.vehicles, error: viewModel.error)
                 }
             }
         }
