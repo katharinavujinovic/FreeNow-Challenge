@@ -1,17 +1,20 @@
 //
 //  CenterMapPin.swift
-//  FreeNowChallenge
+//  FNViews
 //
-//  Created by Katharina Müllek on 09.12.22.
+//  Created by Katharina Vujinovic on 09.12.22.
 //
 
 import SwiftUI
 
-struct CenterMapPin: View {
-    var body: some View {
+public struct CenterMapPin: View {
+    
+    public init() {}
+    
+    public var body: some View {
         Image(systemName: "location.north.fill")
             .foregroundColor(.pink)
-            .frame(width: 25, height: 25)
+            .frame(width: 35, height: 35)
             .rotationEffect(Angle(degrees: 180))
     }
 }

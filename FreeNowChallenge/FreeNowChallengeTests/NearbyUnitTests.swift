@@ -86,7 +86,7 @@ final class NearbyUnitTests: XCTestCase {
 extension NearbyUnitTests {
     
     private func performGetNearbyVehicles() {
-        nearbyViewModel.getNearbyVehicles(center: Configuration.DefaultLocation.center, span: Configuration.DefaultLocation.region.span)
+        nearbyViewModel.getNearbyVehicles(center: Configuration.DefaultLocation.region.center, span: Configuration.DefaultLocation.region.span)
     }
     
 }

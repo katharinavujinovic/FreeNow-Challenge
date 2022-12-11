@@ -1,19 +1,23 @@
 //
-//  VehicleMapAnnotationView.swift
-//  FreeNowChallenge
+//  VehicleMapAnnotation.swift
+//  FNViews
 //
 //  Created by Katharina Vujinovic on 07.12.22.
 //
 
 import SwiftUI
 
-struct VehicleMapAnnotationView: View {
+public struct VehicleMapAnnotation: View {
     
-    @State var vehicle: VehiclePOI
+    public var vehicleImage: Image
     
-    var body: some View {
+    public init(vehicleImage: Image) {
+        self.vehicleImage = vehicleImage
+    }
+    
+    public var body: some View {
         VStack(spacing: 0) {
-            vehicle.fleetImage
+            vehicleImage
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25)
@@ -33,6 +37,6 @@ struct VehicleMapAnnotationView: View {
 
 struct VehicleMapAnnotationView_Previews: PreviewProvider {
     static var previews: some View {
-        VehicleMapAnnotationView(vehicle: VehiclePOI(vehicle: Vehicle(id: 12, coordinate: Coordinate(latitude: 53.5786019615793, longitude: 9.865631461143494), state: .vehicleIsActive, fleetType: .taxi, heading: 77.98233032226562)))
+        VehicleMapAnnotation(vehicleImage: Image(systemName: "heart"))
     }
 }

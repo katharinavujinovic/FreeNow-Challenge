@@ -6,59 +6,38 @@
 //
 
 import SwiftUI
+import FNViews
 
 struct VehicleListView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    let vehicles: [VehiclePOI]?
-    let error: NearbyError?
+    @ObservedObject var viewModel: NearbyViewModel
+    
+    let vehicles: [VehiclePOI]
     
     var body: some View {
         VStack {
-            
-            if let error = error {
-                VStack() {
-                    error.errorImages
-                        .resizable()
-                        .scaledToFit()
-                    Text(error.errorMessage)
-                        .font(.headline)
-                }
-            }
-            if let vehicles = vehicles {
-                List {
-                    ForEach(vehicles) { vehicle in
-                        // can be put in a new one!
-                        HStack() {
-                            vehicle.fleetImage
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 40)
-                                .cornerRadius(10)
-                            VStack(alignment: .leading) {
-                                HStack() {
-                                    Text(vehicle.vehicle.fleetType.rawValue)
-                                        .font(.headline)
-                                    Text(vehicle.vehicle.state.rawValue)
-                                        .font(.body)
-                                }
-                                if let distanceInMeter = vehicle.distanceInMeter {
-                                    Text(distanceInMeter)
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
+            List {
+                ForEach(vehicles) { vehicle in
+                    VehicleListCell(distance: vehicle.distanceInMeter ?? "",
+                                    vehicleId: vehicle.vehicle.id,
+                                    fleetType: vehicle.vehicle.fleetType.rawValue,
+                                    vehicleState: vehicle.vehicle.state.rawValue,
+                                    vehicleImage: vehicle.fleetImage,
+                                    vehicleColor: vehicle.fleetColor)
+                    .onTapGesture {
+                        viewModel.selectedPOI = vehicle
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
             }
         }
-
     }
 }
 
 struct VehicleListView_Previews: PreviewProvider {
     static var previews: some View {
-        VehicleListView(vehicles: [VehiclePOI(vehicle: Vehicle(id: 12, coordinate: Coordinate(latitude: 53.5786019615793, longitude: 9.865631461143494), state: .vehicleIsActive, fleetType: .taxi, heading: 77.98233032226562))], error: nil)
+        VehicleListView(viewModel: NearbyViewModel(), vehicles: [VehiclePOI(vehicle: Vehicle(id: 12, coordinate: Coordinate(latitude: 53.5786019615793, longitude: 9.865631461143494), state: .vehicleIsActive, fleetType: .taxi, heading: 77.98233032226562))])
         }
 }
