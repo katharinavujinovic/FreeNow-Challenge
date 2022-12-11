@@ -1,0 +1,10 @@
+{"poiList":
+    [
+    {"id":1,"coordinate":{"latitude":53.58509658994956,"longitude":9.931846484541893},"state":"ACTIVE","fleetType":"TAXI","heading":150.27467346191406},
+    {"id":2,"coordinate":{"latitude":53.54962005073819,"longitude":10.006599985063076},"state":"ACTIVE","fleetType":"TAXI","heading":8.59874233182552},
+    {"id":3,"coordinate":{"latitude":53.56386955571655,"longitude":9.989944472908974},"state":"ACTIVE","fleetType":"TAXI","heading":259.73169420198974},
+    {"id":4,"coordinate":{"latitude":53.51912744178916,"longitude":9.993812218308449},"state":"ACTIVE","fleetType":"TAXI","heading":2.7108928216916723},
+    {"id":5,"coordinate":{"latitude":53.571335847888996,"longitude":9.96594037860632},"state":"ACTIVE","fleetType":"TAXI","heading":216.7630615234375},
+    {"id":6,"coordinate":{"latitude":53.58971322217346,"longitude":9.97609555721283},"state":"ACTIVE","fleetType":"TAXI","heading":322.9973449707031}
+    ]
+}
