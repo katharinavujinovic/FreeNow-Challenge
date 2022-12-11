@@ -27,13 +27,13 @@ final class NearbyViewModel: ObservableObject {
             .sink(receiveCompletion: { [weak self] result in
                 switch result {
                 case .finished:
-                    // maybe a loading screen?
                     return
                 case .failure:
                     self?.error = NearbyError.networkingError
                 }
             }, receiveValue: { [weak self] vehicles in
                 if let vehicles = vehicles, !vehicles.isEmpty {
+                    self?.error = nil
                     var allVehicles: [VehiclePOI] = []
                     for vehicle in vehicles {
                         let distanceToUser = self?.calculateDistanceToCenter(centerLocation: center, vehicle: vehicle)
@@ -43,6 +43,7 @@ final class NearbyViewModel: ObservableObject {
                     self?.vehicles = sortedByDistance
                     self?.selectedPOI = sortedByDistance.first
                 } else {
+                    self?.vehicles = nil
                     self?.error = NearbyError.noVehiclesNearby
                 }
             })

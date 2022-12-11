@@ -24,6 +24,13 @@ struct VehiclePOI: Identifiable {
         }
     }
     
+    var fleetColor: Color {
+        switch vehicle.fleetType {
+        case .taxi:
+            return .yellow
+        }
+    }
+    
     var distanceInMeter: String? {
         guard let distanceToUser = distanceToUser else { return nil }
         

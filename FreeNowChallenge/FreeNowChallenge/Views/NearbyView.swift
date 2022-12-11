@@ -8,14 +8,13 @@
 import SwiftUI
 import MapKit
 import Combine
+import FNViews
 
 struct NearbyView: View {
     
-    @ObservedObject
-    var viewModel: NearbyViewModel
+    @ObservedObject var viewModel: NearbyViewModel
     
-    @State
-    private var region = Configuration.DefaultLocation.region
+    @State private var region = Configuration.DefaultLocation.region
     
     @State private var showingVehicleList = false
     
@@ -26,8 +25,8 @@ struct NearbyView: View {
                 annotationContent: { vehicle in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: vehicle.vehicle.coordinate.latitude,
                                                                  longitude: vehicle.vehicle.coordinate.longitude)) {
-                    VehicleMapAnnotationView(vehicle: vehicle)
-                        .scaleEffect(viewModel.selectedPOI?.id == vehicle.id ? 1 : 0.7)
+                    VehicleMapAnnotation(vehicleImage: vehicle.fleetImage)
+                        .scaleEffect(viewModel.selectedPOI?.id == vehicle.id ? 1 : 0.5)
                         .shadow(radius: 5)
                         .onTapGesture {
                             viewModel.selectedPOI = vehicle
@@ -37,15 +36,26 @@ struct NearbyView: View {
                 self.viewModel.getNearbyVehicles(center: newRegion.center,
                                                  span: newRegion.span)
             }).ignoresSafeArea()
+            
             CenterMapPin()
+            
             VStack {
                 Spacer()
+                
+                if let error = viewModel.error {
+                    ErrorView(errorImage: error.errorImage, errorMessage: error.errorMessage)
+                }
                 
                 if let vehicles = viewModel.vehicles {
                     ZStack {
                         ForEach(vehicles) { location in
                             if viewModel.selectedPOI?.id == location.id {
-                                NearestVehicleView(vehiclePOI: location,
+                                NearestVehicleView(distance: location.distanceInMeter ?? "",
+                                                   vehicleId: location.vehicle.id,
+                                                   fleetType: location.vehicle.fleetType.rawValue,
+                                                   vehicleState: location.vehicle.state.rawValue,
+                                                   vehicleImage: location.fleetImage,
+                                                   vehicleColor: location.fleetColor,
                                                    isClosestVehicle: location.id == viewModel.vehicles?.first?.id)
                             }
                         }
@@ -55,29 +65,38 @@ struct NearbyView: View {
                     .transition(.asymmetric(
                         insertion: .move(edge: .trailing),
                         removal: .move(edge: .leading)))
-                }
-                
-                Button {
-                    showingVehicleList.toggle()
-                } label: {
-                    Label {
-                        Text("All Vehicles Nearby")
-                            .font(.body)
-                    } icon: {
-                        Image(systemName: "heart")
+                    
+                    AllVehiclesButton
+                    .sheet(isPresented: $showingVehicleList) {
+                        VehicleListView(viewModel: viewModel, vehicles: vehicles)
                     }
-                    .foregroundColor(Color.white)
-                    .frame(width: .infinity, height: .infinity)
-                    .padding(6)
-                    .background(Color.gray)
-                    .cornerRadius(10)
-                }
-                .sheet(isPresented: $showingVehicleList) {
-                    VehicleListView(vehicles: viewModel.vehicles, error: viewModel.error)
                 }
             }
         }
     }
+    
+}
+
+extension NearbyView {
+    
+    private var AllVehiclesButton: some View {
+        Button {
+            showingVehicleList.toggle()
+        } label: {
+            Label {
+                Text("All Vehicles Nearby")
+                    .font(.body)
+            } icon: {
+                Image(systemName: "heart")
+            }
+            .labelStyle(.titleOnly)
+            .foregroundColor(Color.white)
+            .padding(6)
+            .background(Color.gray)
+            .cornerRadius(10)
+        }
+    }
+    
 }
 
 #if DEBUG
@@ -87,3 +106,5 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 #endif
+
+

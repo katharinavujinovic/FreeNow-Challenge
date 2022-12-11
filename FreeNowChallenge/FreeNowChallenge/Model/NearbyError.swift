@@ -25,7 +25,7 @@ enum NearbyError: Error {
         }
     }
     
-    var errorImages: Image {
+    var errorImage: Image {
         switch self {
         case .noVehiclesNearby:
             return Image(systemName: "clear.fill")

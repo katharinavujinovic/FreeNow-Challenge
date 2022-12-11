@@ -19,8 +19,6 @@ struct Configuration {
     
     // currently set to Hamburg
     struct DefaultLocation {
-        static let center = CLLocationCoordinate2D(latitude: 53.5488, longitude: 9.9872)
-        static let span = 0.01
         static let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 53.5488, longitude: 9.9872), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
     }
     
